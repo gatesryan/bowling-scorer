@@ -1,6 +1,7 @@
 from .bowling_types import Roll, Frame, STRIKE_VALUE
 
 def parse_frames(rolls: list[Roll]) -> list[Frame]:
+    """Parse a roll sequence into up to 10 `Frame` objects."""
     frames = []
 
     i = 0
@@ -26,6 +27,7 @@ def parse_frames(rolls: list[Roll]) -> list[Frame]:
     return frames
 
 def validate_rolls(rolls: list[Roll]):
+    """Validate roll values and basic ordering constraints."""
     i = 0
     prev_roll = None
     for roll in rolls:
@@ -38,6 +40,7 @@ def validate_rolls(rolls: list[Roll]):
         i += 1
 
 def get_roll_value(roll: Roll | None, prev_roll: Roll | None=None) -> int:
+    """Convert a roll token into its numeric pinfall value."""
     if isinstance(roll, int):
         return roll
     elif is_strike(roll):
@@ -48,6 +51,7 @@ def get_roll_value(roll: Roll | None, prev_roll: Roll | None=None) -> int:
         raise ValueError("Must provide previous roll if current roll is a spare")
 
 def get_bonus_roll_values(frame: Frame, rolls: list[Roll]) -> list[int] | None:
+    """Return bonus roll values for spare/strike frames, or `None` if incomplete."""
     roll_values = []
     if frame.kind == "strike":
         i = frame.roll_start_index + 1
@@ -64,19 +68,24 @@ def get_bonus_roll_values(frame: Frame, rolls: list[Roll]) -> list[int] | None:
 
 
 def get_roll(rolls, idx) -> Roll | None:
+    """Safely return the roll at `idx`, or `None` if out of bounds."""
     if idx < len(rolls):
         return rolls[idx]
     else:
         return None
 
 def is_strike(roll: Roll | None) -> bool:
+    """Return `True` when the roll token represents a strike."""
     return roll == "X"
 
 def is_spare(roll: Roll | None) -> bool:
+    """Return `True` when the roll token represents a spare."""
     return roll == "/"
 
 def is_roll_number_valid(roll: Roll) -> bool:
+    """Return `True` for integer rolls between 0 and `STRIKE_VALUE`."""
     return isinstance(roll, int) and 0 <= roll <= STRIKE_VALUE
 
 def is_valid_roll(roll: Roll) -> bool:
+    """Return `True` when the roll is a strike, spare, or valid numeric roll."""
     return is_strike(roll) or is_spare(roll) or is_roll_number_valid(roll)

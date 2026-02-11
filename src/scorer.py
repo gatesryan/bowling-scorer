@@ -2,6 +2,7 @@ from .bowling_types import Roll, Frame
 from .helpers import validate_rolls, parse_frames, get_roll, get_roll_value, is_spare, get_bonus_roll_values
 
 def score_game(rolls: list[Roll]) -> list[int | None]:
+    """Return per-frame scores for a game, using `None` for incomplete frame scores."""
     validate_rolls(rolls)
     scores = []
     frames = parse_frames(rolls)
@@ -12,6 +13,7 @@ def score_game(rolls: list[Roll]) -> list[int | None]:
     return scores
 
 def score_frame(frame: Frame, rolls: list[Roll]) -> int | None:
+    """Dispatch scoring to the correct frame-scoring function by frame kind."""
     if frame.kind == "open":
         return score_open_frame(frame)
     elif frame.kind == "spare":
@@ -21,12 +23,14 @@ def score_frame(frame: Frame, rolls: list[Roll]) -> int | None:
 
 
 def score_open_frame(frame: Frame) -> int | None:
+    """Score an open frame when both rolls are known integers."""
     if isinstance(frame.first, int) and isinstance(frame.second, int):
         return frame.first + frame.second
     else:
         return None
     
 def score_spare_frame(frame: Frame, rolls: list[Roll]) -> int | None:
+    """Score a spare frame including its single bonus roll when available."""
     first_roll_val = get_roll_value(frame.first)
     second_roll_val = get_roll_value(frame.second, first_roll_val)
 
@@ -38,6 +42,7 @@ def score_spare_frame(frame: Frame, rolls: list[Roll]) -> int | None:
         return None
     
 def score_strike_frame(frame: Frame, rolls: list[Roll]) -> int | None:
+    """Score a strike frame including its two bonus rolls when available."""
     first_roll_val = get_roll_value(frame.first)
     bonus_roll_values = get_bonus_roll_values(frame, rolls)
 
