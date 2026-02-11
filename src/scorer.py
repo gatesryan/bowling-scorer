@@ -1,4 +1,4 @@
-from bowling_types import Roll, Frame
+from bowling_types.bowling_types import Roll, Frame
 from helpers import validate_rolls, parse_frames, get_roll, get_roll_value, is_spare, get_bonus_roll_values
 
 def score_game(rolls: list[Roll]) -> list[int | None]:
