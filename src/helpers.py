@@ -84,7 +84,7 @@ def is_spare(roll: Roll | None) -> bool:
 
 def is_roll_number_valid(roll: Roll) -> bool:
     """Return `True` for integer rolls between 0 and `STRIKE_VALUE`."""
-    return isinstance(roll, int) and 0 <= roll <= STRIKE_VALUE
+    return isinstance(roll, int) and 0 <= roll <= 9
 
 def is_valid_roll(roll: Roll) -> bool:
     """Return `True` when the roll is a strike, spare, or valid numeric roll."""
