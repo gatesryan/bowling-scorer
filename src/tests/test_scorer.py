@@ -1,8 +1,8 @@
 import pytest
 from typing import Literal
 
-from scorer import score_game
-from bowling_types.bowling_types import Roll
+from src.scorer import score_game
+from src.bowling_types import Roll
 
 def test_complete_open_game_all_zeros():
     rolls: list[Roll] = [0, 0] * 10

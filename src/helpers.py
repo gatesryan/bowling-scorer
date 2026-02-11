@@ -1,4 +1,4 @@
-from bowling_types import Roll, Frame, STRIKE_VALUE
+from .bowling_types import Roll, Frame, STRIKE_VALUE
 
 def parse_frames(rolls: list[Roll]) -> list[Frame]:
     frames = []
@@ -80,4 +80,3 @@ def is_roll_number_valid(roll: Roll) -> bool:
 
 def is_valid_roll(roll: Roll) -> bool:
     return is_strike(roll) or is_spare(roll) or is_roll_number_valid(roll)
-
